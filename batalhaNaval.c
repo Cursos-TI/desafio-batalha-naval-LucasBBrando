@@ -62,12 +62,5 @@ int main() {
         }
         printf("\n");
     }
-    
-    printf("\nLegenda:\n");
-    printf("0 - Água\n");
-    printf("1 - Cone (3x5) - Topo esquerdo\n");
-    printf("2 - Cruz (5x5) - Centro-direito\n");
-    printf("4 - Octaedro (3x3) - Canto inferior direito\n");
-
     return 0;
 }
