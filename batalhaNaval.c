@@ -1,40 +1,73 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+// Função para aplicar habilidades
+void aplicarHabilidade(char tabuleiro[10][10], int *habilidade, int linhas, int cols, int linha_centro, int coluna_centro, char marca) {
+    int inicio_linha = linha_centro - (linhas / 2);
+    int inicio_coluna = coluna_centro - (cols / 2);
+    
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (*(habilidade + i*cols + j) == 1) {
+                if ((inicio_linha + i) >= 0 && (inicio_linha + i) < 10 &&
+                    (inicio_coluna + j) >= 0 && (inicio_coluna + j) < 10) {
+                    tabuleiro[inicio_linha + i][inicio_coluna + j] = marca;
+                }
+            }
+        }
+    }
+}
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
-
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
-
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
-
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
+    char tabuleiro[10][10];
     
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    // Inicializa com água
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            tabuleiro[i][j] = '0';
+        }
+    }
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+    // Define as habilidades
+    int cone[3][5] = {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1}
+    };
+
+    int cruz[5][5] = {
+        {0,0,1,0,0},
+        {0,0,1,0,0},
+        {1,1,1,1,1},
+        {0,0,1,0,0},
+        {0,0,1,0,0}
+    };
+
+    int octaedro[3][3] = {
+        {0,1,0},
+        {1,1,1},
+        {0,1,0}
+    };
+
+    // Aplica as habilidades em posições separadas
+    aplicarHabilidade(tabuleiro, (int *)cone, 3, 5, 2, 3, '1');    // Cone no canto superior esquerdo
+    aplicarHabilidade(tabuleiro, (int *)cruz, 5, 5, 6, 6, '2');    // Cruz no centro-direito
+    aplicarHabilidade(tabuleiro, (int *)octaedro, 3, 3, 8, 8, '4'); // Octaedro no canto inferior direito
+
+    // Mostra o tabuleiro
+    printf("   A B C D E F G H I J\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d  ", i);
+        for (int j = 0; j < 10; j++) {
+            printf("%c ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+    
+    printf("\nLegenda:\n");
+    printf("0 - Água\n");
+    printf("1 - Cone (3x5) - Topo esquerdo\n");
+    printf("2 - Cruz (5x5) - Centro-direito\n");
+    printf("4 - Octaedro (3x3) - Canto inferior direito\n");
 
     return 0;
 }
